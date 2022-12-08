@@ -157,7 +157,8 @@ class RPMUtil:
                 ],
                 "checks": [
                     lambda proc: proc.returncode != StatusCode.SEGFAULT,
-                    lambda proc: len(proc.stdout.splitlines()) == 3 or len(proc.stdout.splitlines()) == 2,
+                    lambda proc: len(proc.stdout.splitlines()) == 3 
+                    or len(proc.stdout.splitlines()) == 2,
                 ],
             },
             "Obsoletename": {
