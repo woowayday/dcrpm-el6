@@ -190,10 +190,14 @@ class DcRPM:
         # first.  If this actually kills someone, stop recovery here, since
         # many times, the other users will wake up and finish.
         self.logger.info("Attempting to fix RPM DB at %s", self.args.dbpath)
-        dbenv_lockfile = join(self.args.dbpath, ".dbenv.lock")
+        
         rpm_lockfile = join(self.args.dbpath, ".rpm.lock")
-        lock_procs = pidutil.procs_holding_file(dbenv_lockfile)
         lock_procs |= pidutil.procs_holding_file(rpm_lockfile)
+        
+        if platform.dist()[1].split('.')[0] != '6':
+            dbenv_lockfile = join(self.args.dbpath, ".dbenv.lock")
+            lock_procs = pidutil.procs_holding_file(dbenv_lockfile)
+            
 
         self.logger.debug("Found %d pids holding lock files", len(lock_procs))
         if lock_procs and pidutil.send_signals(lock_procs, signal.SIGKILL):
