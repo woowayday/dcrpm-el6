@@ -12,6 +12,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import logging
 import os
+import platform
 import signal
 
 from fnmatch import fnmatch
@@ -192,11 +193,11 @@ class DcRPM:
         self.logger.info("Attempting to fix RPM DB at %s", self.args.dbpath)
         
         rpm_lockfile = join(self.args.dbpath, ".rpm.lock")
-        lock_procs |= pidutil.procs_holding_file(rpm_lockfile)
+        lock_procs = pidutil.procs_holding_file(rpm_lockfile)
         
         if platform.dist()[1].split('.')[0] != '6':
             dbenv_lockfile = join(self.args.dbpath, ".dbenv.lock")
-            lock_procs = pidutil.procs_holding_file(dbenv_lockfile)
+            lock_procs |= pidutil.procs_holding_file(dbenv_lockfile)
             
 
         self.logger.debug("Found %d pids holding lock files", len(lock_procs))
