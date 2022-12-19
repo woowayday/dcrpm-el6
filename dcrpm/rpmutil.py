@@ -39,9 +39,9 @@ except ImportError:
     pass
 
 
-RPM_CHECK_TIMEOUT_SEC = 5  # type: int
+RPM_CHECK_TIMEOUT_SEC = 30  # type: int
 YUM_COMPLETE_TIMEOUT_SEC = 10  # type: int
-VERIFY_TIMEOUT_SEC = 5  # type: int
+VERIFY_TIMEOUT_SEC = 30  # type: int
 RECOVER_TIMEOUT_SEC = 90  # type: int
 REBUILD_TIMEOUT_SEC = 300  # type: int
 MIN_ACCEPTABLE_PKG_COUNT = 50  # type: int
