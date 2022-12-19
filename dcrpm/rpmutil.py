@@ -136,7 +136,12 @@ class RPMUtil:
         if sys.platform == "darwin":
             self.logger.debug("check_rpmdb_indexes is not implemented for darwin")
             return
-
+        
+        # EL6 requires 2 lines from BDB Conflictname index
+        index_len = 3
+        if platform.dist()[1].split('.')[0] == '6':
+            index_len = 2
+            
         rpmdb_indexes = {
             "Basenames": {
                 "cmd": [self.rpm_path, "-qf", self.rpm_path, "--dbpath", self.dbpath],
@@ -157,8 +162,7 @@ class RPMUtil:
                 ],
                 "checks": [
                     lambda proc: proc.returncode != StatusCode.SEGFAULT,
-                    lambda proc: len(proc.stdout.splitlines()) == 3 
-                    or len(proc.stdout.splitlines()) == 2,
+                    lambda proc: len(proc.stdout.splitlines()) == index_len,
                 ],
             },
             "Obsoletename": {
