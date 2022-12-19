@@ -12,6 +12,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import logging
 import os
+import platform
 import re
 import signal
 import sys
